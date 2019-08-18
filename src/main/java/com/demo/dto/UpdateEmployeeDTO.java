@@ -3,7 +3,7 @@ package com.demo.dto;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class UpdateSalaryDTO implements Serializable {
+public class UpdateEmployeeDTO implements Serializable {
 
 	/**
 	 * serialVersionUID
@@ -12,13 +12,15 @@ public class UpdateSalaryDTO implements Serializable {
 
 	private Long id;
 
+	private String name;
+
 	private BigDecimal salary;
 
-	public UpdateSalaryDTO() {
+	public UpdateEmployeeDTO() {
 		super();
 	}
 
-	public UpdateSalaryDTO(Long id, BigDecimal salary) {
+	public UpdateEmployeeDTO(Long id, BigDecimal salary) {
 		super();
 		this.id = id;
 		this.salary = salary;
@@ -38,6 +40,14 @@ public class UpdateSalaryDTO implements Serializable {
 
 	public void setSalary(BigDecimal salary) {
 		this.salary = salary;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

@@ -30,26 +30,33 @@ public class EmployeeService {
 	public List<Employee> findAllEmployees() {
 		return employeeRepository.findAll();
 	}
-	
+
 	/**
-	 * The update method in DAO will be committed or Rollback at the end of   
+	 * The update method in DAO will be committed or Rollback at the end of
 	 * updateEmployeeSalary method.
 	 * 
 	 * @param empId
 	 * @param salary
 	 * @throws Exception
 	 */
-	@Transactional(rollbackFor=Exception.class)
+	@Transactional(rollbackFor = Exception.class)
 	public void updateEmployeeSalary(Long empId, BigDecimal salary) throws Exception {
 		Employee emp = employeeDAO.findById(empId);
 		emp.setSalary(salary);
 		employeeDAO.updateEmployeeSalary(emp);
 		mimicException();
 	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public void updateEmployeeName(Long empId, String name) throws Exception {
+		Employee emp = employeeDAO.findById(empId);
+		emp.setName(name);
+		employeeDAO.updateEmployeeName(emp);
+		mimicException();
+	}
 
 	private void mimicException() throws Exception {
 		throw new Exception("Mimicking Exception");
-
 	}
 
 }
