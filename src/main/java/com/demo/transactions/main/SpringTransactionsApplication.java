@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.demo.entity.Employee;
 import com.demo.repository.EmployeeRepository;
@@ -15,6 +16,7 @@ import com.demo.repository.EmployeeRepository;
 @SpringBootApplication(scanBasePackages = { "com.demo.*" })
 @EnableJpaRepositories(basePackages = "com.demo.repository")
 @EntityScan(basePackages = "com.demo.entity")
+@EnableTransactionManagement
 public class SpringTransactionsApplication {
 
 	public static void main(String[] args) {
@@ -24,7 +26,7 @@ public class SpringTransactionsApplication {
 	@Bean
 	CommandLineRunner startup(EmployeeRepository employeeRepository) {
 		return args -> {
-			System.out.println("===============  SPRING TRANSACTIONS ====================");
+			System.out.println("===============  SPRING TRANSACTIONS TESTING ====================");
 			employeeRepository.save(new Employee("KARTHIK", "CANADA", BigDecimal.valueOf(100)));
 		};
 	}
