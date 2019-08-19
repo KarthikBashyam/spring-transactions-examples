@@ -44,7 +44,7 @@ public class EmployeeController {
 
 	@PostMapping(path = "/message")
 	public void sendMessage() {
-		messageSender.sendMessgae("This is sample messge");
+		messageSender.sendMessage("This is sample messge");
 	}
 
 }

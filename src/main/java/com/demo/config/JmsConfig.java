@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.connection.CachingConnectionFactory;
+import org.springframework.jms.connection.JmsTransactionManager;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.support.converter.MappingJackson2MessageConverter;
 import org.springframework.jms.support.converter.MessageConverter;
@@ -37,7 +38,7 @@ public class JmsConfig {
 	public DefaultJmsListenerContainerFactory jmsListenerContainerFactory() {
 		DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
 		factory.setConnectionFactory(myFactory());
-
+		factory.setSessionTransacted(true);
 		return factory;
 	}
 
@@ -48,7 +49,9 @@ public class JmsConfig {
 
 	@Bean
 	public JmsTemplate jmsTemplate() {
-		return new JmsTemplate(cachingConnectionFactory());
+		JmsTemplate jmsTemplate = new JmsTemplate(cachingConnectionFactory());
+		jmsTemplate.setSessionTransacted(true);
+		return jmsTemplate;
 	}
 
 }
