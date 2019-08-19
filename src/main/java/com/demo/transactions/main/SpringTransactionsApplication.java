@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jms.annotation.EnableJms;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.demo.entity.Employee;
@@ -17,6 +18,7 @@ import com.demo.repository.EmployeeRepository;
 @EnableJpaRepositories(basePackages = "com.demo.repository")
 @EntityScan(basePackages = "com.demo.entity")
 @EnableTransactionManagement
+@EnableJms
 public class SpringTransactionsApplication {
 
 	public static void main(String[] args) {

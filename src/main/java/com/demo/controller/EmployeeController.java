@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.demo.dto.UpdateEmployeeDTO;
 import com.demo.entity.Employee;
+import com.demo.messaging.MessageSender;
 import com.demo.service.EmployeeService;
 
 @RestController
@@ -17,6 +18,9 @@ public class EmployeeController {
 
 	@Autowired
 	private EmployeeService employeeService;
+
+	@Autowired
+	private MessageSender messageSender;
 
 	@GetMapping(path = "/")
 	public String hello() {
@@ -36,6 +40,11 @@ public class EmployeeController {
 	@PostMapping(path = "/update/name")
 	public void updateEmployeeName(@RequestBody UpdateEmployeeDTO dto) throws Exception {
 		employeeService.updateEmployeeName(dto.getId(), dto.getName());
+	}
+
+	@PostMapping(path = "/message")
+	public void sendMessage() {
+		messageSender.sendMessgae("This is sample messge");
 	}
 
 }
