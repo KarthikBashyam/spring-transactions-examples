@@ -1,12 +1,12 @@
 package com.demo.service;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.demo.dto.UpdateEmployeeDTO;
 import com.demo.entity.Employee;
 import com.demo.messaging.MessageSender;
 import com.demo.repository.EmployeeDAO;
@@ -44,21 +44,21 @@ public class EmployeeService {
 	 * @throws Exception
 	 */
 	@Transactional(rollbackFor = Exception.class)
-	public void updateEmployeeSalary(Long empId, BigDecimal salary) throws Exception {
-		Employee emp = employeeDAO.findById(empId);
-		emp.setSalary(salary);
+	public void updateEmployeeSalary(UpdateEmployeeDTO dto) throws Exception {
+		Employee emp = employeeDAO.findById(dto.getId());
+		emp.setSalary(dto.getSalary());
 		employeeDAO.updateEmployeeSalary(emp);
 		// JMS message will roll-back if there is an exception before returning from
-		// this method.Can use Propagation.REQUIRES_NEW to send jms message even in case
+		// this method.Can use Propagation.REQUIRES_NEW to send JMS message even in case
 		// of exceptions.
 		messageSender.sendMessage("Employee salary updated");
 		mimicException();
 	}
 
 	@Transactional(rollbackFor = Exception.class)
-	public void updateEmployeeName(Long empId, String name) throws Exception {
-		Employee emp = employeeDAO.findById(empId);
-		emp.setName(name);
+	public void updateEmployeeName(UpdateEmployeeDTO dto) throws Exception {
+		Employee emp = employeeDAO.findById(dto.getId());
+		emp.setName(dto.getName());
 		employeeDAO.updateEmployeeName(emp);
 		mimicException();
 	}

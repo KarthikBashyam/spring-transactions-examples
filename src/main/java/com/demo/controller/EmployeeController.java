@@ -34,12 +34,12 @@ public class EmployeeController {
 
 	@PostMapping(path = "/update/salary")
 	public void updateEmployeeSalary(@RequestBody UpdateEmployeeDTO dto) throws Exception {
-		employeeService.updateEmployeeSalary(dto.getId(), dto.getSalary());
+		employeeService.updateEmployeeSalary(dto);
 	}
 
 	@PostMapping(path = "/update/name")
 	public void updateEmployeeName(@RequestBody UpdateEmployeeDTO dto) throws Exception {
-		employeeService.updateEmployeeName(dto.getId(), dto.getName());
+		employeeService.updateEmployeeName(dto);
 	}
 
 	@PostMapping(path = "/message")
