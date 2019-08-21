@@ -10,7 +10,7 @@ import org.springframework.jms.support.converter.MappingJackson2MessageConverter
 import org.springframework.jms.support.converter.MessageConverter;
 import org.springframework.jms.support.converter.MessageType;
 
-//@Configuration
+@Configuration
 public class ActiveMQJmsConfig {
 
 	@Bean
