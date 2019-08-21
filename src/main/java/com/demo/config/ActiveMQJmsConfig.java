@@ -10,8 +10,8 @@ import org.springframework.jms.support.converter.MappingJackson2MessageConverter
 import org.springframework.jms.support.converter.MessageConverter;
 import org.springframework.jms.support.converter.MessageType;
 
-@Configuration
-public class JmsConfig {
+//@Configuration
+public class ActiveMQJmsConfig {
 
 	@Bean
 	public ActiveMQConnectionFactory activeMQConnFactory() {
@@ -49,6 +49,7 @@ public class JmsConfig {
 	@Bean
 	public JmsTemplate jmsTemplate() {
 		JmsTemplate jmsTemplate = new JmsTemplate(cachingConnectionFactory());
+		// important property for automatic roll backs
 		jmsTemplate.setSessionTransacted(true);
 		return jmsTemplate;
 	}

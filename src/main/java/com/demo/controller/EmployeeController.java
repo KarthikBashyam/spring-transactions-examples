@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.demo.dto.UpdateEmployeeDTO;
 import com.demo.entity.Employee;
 import com.demo.messaging.MessageSender;
+import com.demo.messaging.RabbitMQSender;
 import com.demo.service.EmployeeService;
 import com.demo.service.EmployeeTransTemplateService;
 
@@ -25,6 +26,9 @@ public class EmployeeController {
 
 	@Autowired
 	private MessageSender messageSender;
+
+	@Autowired
+	private RabbitMQSender rabbitMQSender;
 
 	@GetMapping(path = "/")
 	public String hello() {
@@ -54,6 +58,11 @@ public class EmployeeController {
 	@PostMapping(path = "/message")
 	public void sendMessage() {
 		messageSender.sendMessage("This is sample messge");
+	}
+
+	@PostMapping(path = "/message/rabbit")
+	public void sendRabbtMWMessage() throws InterruptedException {
+		rabbitMQSender.sendMessage("Welcome to RabbitMQ");
 	}
 
 }
