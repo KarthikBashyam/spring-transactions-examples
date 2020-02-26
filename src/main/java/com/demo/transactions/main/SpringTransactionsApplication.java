@@ -12,7 +12,7 @@ import org.springframework.jms.annotation.EnableJms;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.demo.entity.Employee;
-import com.demo.repository.EmployeeRepository;
+import com.demo.service.EmployeeService;
 
 @SpringBootApplication(scanBasePackages = { "com.demo.*" })
 @EnableJpaRepositories(basePackages = "com.demo.repository")
@@ -26,10 +26,12 @@ public class SpringTransactionsApplication {
 	}
 
 	@Bean
-	CommandLineRunner startup(EmployeeRepository employeeRepository) {
+	CommandLineRunner startup(EmployeeService employeeService) {
 		return args -> {
 			System.out.println("===============  SPRING TRANSACTIONS TESTING ====================");
-			employeeRepository.save(new Employee("KARTHIK", "CANADA", BigDecimal.valueOf(100)));
+			Employee emp = new Employee("KARTHIK", null, BigDecimal.valueOf(100));
+			//emp.setAddress(new Address("Toronto"));
+			employeeService.saveEmployee(emp);
 		};
 	}
 

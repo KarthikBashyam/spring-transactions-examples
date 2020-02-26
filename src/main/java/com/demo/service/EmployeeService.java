@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.demo.dto.UpdateEmployeeDTO;
@@ -32,7 +33,7 @@ public class EmployeeService {
 	private MessageSender messageSender;
 
 	public List<Employee> findAllEmployees() {
-		return employeeRepository.findAll();
+		return employeeDAO.getEmployees();
 	}
 
 	/**
@@ -65,6 +66,14 @@ public class EmployeeService {
 
 	private void mimicException() throws Exception {
 		throw new Exception("Mimicking Exception");
+	}
+	
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public void saveEmployee(Employee emp) {
+		employeeDAO.saveEmployee(emp);
+		employeeDAO.createAddress(emp);
+		employeeDAO.printAddress(emp);
+		
 	}
 
 }

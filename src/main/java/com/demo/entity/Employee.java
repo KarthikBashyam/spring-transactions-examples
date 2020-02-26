@@ -2,9 +2,11 @@ package com.demo.entity;
 
 import java.math.BigDecimal;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Version;
 
 @Entity
@@ -19,6 +21,9 @@ public class Employee {
 	private String country;
 
 	private BigDecimal salary;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	private Address address;
 
 	@Version
 	private Long version;
@@ -78,6 +83,14 @@ public class Employee {
 
 	public void setVersion(Long version) {
 		this.version = version;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
 	@Override
