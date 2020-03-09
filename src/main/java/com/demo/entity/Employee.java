@@ -6,8 +6,12 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Version;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Employee {
@@ -22,8 +26,15 @@ public class Employee {
 
 	private BigDecimal salary;
 
+	// Bi-Directional
 	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "ADD_ID")
+	@JsonManagedReference
 	private Address address;
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = " DEPT_ID")
+	private Department department;
 
 	@Version
 	private Long version;
@@ -93,6 +104,14 @@ public class Employee {
 		this.address = address;
 	}
 
+	public Department getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
+
 	@Override
 	public String toString() {
 		return "Employee [id=" + id + ", name=" + name + ", country=" + country + ", salary=" + salary + ", version="
@@ -103,6 +122,7 @@ public class Employee {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((address == null) ? 0 : address.hashCode());
 		result = prime * result + ((country == null) ? 0 : country.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
@@ -120,6 +140,11 @@ public class Employee {
 		if (getClass() != obj.getClass())
 			return false;
 		Employee other = (Employee) obj;
+		if (address == null) {
+			if (other.address != null)
+				return false;
+		} else if (!address.equals(other.address))
+			return false;
 		if (country == null) {
 			if (other.country != null)
 				return false;

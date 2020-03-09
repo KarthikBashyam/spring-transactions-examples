@@ -67,13 +67,14 @@ public class EmployeeService {
 	private void mimicException() throws Exception {
 		throw new Exception("Mimicking Exception");
 	}
-	
+
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void saveEmployee(Employee emp) {
 		employeeDAO.saveEmployee(emp);
-		employeeDAO.createAddress(emp);
-		employeeDAO.printAddress(emp);
-		
+	}
+
+	public List<Employee> getEmpNameByCity(String city) {
+		return employeeDAO.getEmpNameByCity(city);
 	}
 
 }

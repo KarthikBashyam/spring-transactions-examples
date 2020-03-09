@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import com.demo.entity.Address;
 import com.demo.entity.Employee;
 import com.demo.service.EmployeeService;
 
@@ -18,7 +19,7 @@ import com.demo.service.EmployeeService;
 @EnableJpaRepositories(basePackages = "com.demo.repository")
 @EntityScan(basePackages = "com.demo.entity")
 @EnableTransactionManagement
-@EnableJms
+//@EnableJms
 public class SpringTransactionsApplication {
 
 	public static void main(String[] args) {
@@ -30,7 +31,7 @@ public class SpringTransactionsApplication {
 		return args -> {
 			System.out.println("===============  SPRING TRANSACTIONS TESTING ====================");
 			Employee emp = new Employee("KARTHIK", null, BigDecimal.valueOf(100));
-			//emp.setAddress(new Address("Toronto"));
+			emp.setAddress(new Address("TORONTO"));
 			employeeService.saveEmployee(emp);
 		};
 	}

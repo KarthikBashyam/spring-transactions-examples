@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.demo.dto.UpdateEmployeeDTO;
@@ -63,6 +64,11 @@ public class EmployeeController {
 	@PostMapping(path = "/message/rabbit")
 	public void sendRabbtMWMessage() throws InterruptedException {
 		rabbitMQSender.sendMessage("Welcome to RabbitMQ");
+	}
+
+	@GetMapping(path = "/employee")
+	public List<Employee> getEmpNameByCity(@RequestParam(name = "city") String city) {
+		return employeeService.getEmpNameByCity(city);
 	}
 
 }
