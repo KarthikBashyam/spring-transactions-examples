@@ -70,5 +70,12 @@ public class EmployeeController {
 	public List<Employee> getEmpNameByCity(@RequestParam(name = "city") String city) {
 		return employeeService.getEmpNameByCity(city);
 	}
+	
+	@PostMapping(path = "/update/department")
+	public void updateEmployee(@RequestParam(name = "empid") String empId, 
+							   @RequestParam(name = "dept") String dept) {
+
+		employeeService.updateDepartment(Long.valueOf(empId), dept);
+	}
 
 }

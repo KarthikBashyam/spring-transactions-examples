@@ -1,6 +1,7 @@
 package com.demo.entity;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -8,10 +9,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Version;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Employee {
@@ -26,15 +26,17 @@ public class Employee {
 
 	private BigDecimal salary;
 
-	// Bi-Directional
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "ADD_ID")
-	@JsonManagedReference
-	private Address address;
+	// One-To-many should be always inverse if BI-Directional.
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "employees")
+	private List<Address> address;
 
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = " DEPT_ID")
+	@JoinColumn(name = "DEPT_ID")
 	private Department department;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "PARKING_ID")
+	private ParkingLot parkingLot;
 
 	@Version
 	private Long version;
@@ -96,20 +98,28 @@ public class Employee {
 		this.version = version;
 	}
 
-	public Address getAddress() {
-		return address;
-	}
-
-	public void setAddress(Address address) {
-		this.address = address;
-	}
-
 	public Department getDepartment() {
 		return department;
 	}
 
 	public void setDepartment(Department department) {
 		this.department = department;
+	}
+
+	public List<Address> getAddress() {
+		return address;
+	}
+
+	public void setAddress(List<Address> address) {
+		this.address = address;
+	}
+
+	public ParkingLot getParkingLot() {
+		return parkingLot;
+	}
+
+	public void setParkingLot(ParkingLot parkingLot) {
+		this.parkingLot = parkingLot;
 	}
 
 	@Override

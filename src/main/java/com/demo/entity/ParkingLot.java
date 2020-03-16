@@ -1,37 +1,24 @@
 package com.demo.entity;
 
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import javax.persistence.OneToOne;
 
 @Entity
-public class Department {
+public class ParkingLot {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
+	private Long lot;
+
 	private String name;
 
-	public Department() {
-		super();
-	}
-
-	public Department(String name) {
-		super();
-		this.name = name;
-	}
-
-	// Bi-Directional
-	@OneToMany(mappedBy = "department")
-	@JsonManagedReference
-	private List<Employee> employees;
+	@OneToOne(mappedBy = "parkingLot")
+	private Employee employee;
 
 	public Long getId() {
 		return id;
@@ -39,6 +26,14 @@ public class Department {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Long getLot() {
+		return lot;
+	}
+
+	public void setLot(Long lot) {
+		this.lot = lot;
 	}
 
 	public String getName() {
@@ -49,19 +44,21 @@ public class Department {
 		this.name = name;
 	}
 
-	public List<Employee> getEmployees() {
-		return employees;
+	public Employee getEmployee() {
+		return employee;
 	}
 
-	public void setEmployees(List<Employee> employees) {
-		this.employees = employees;
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((employee == null) ? 0 : employee.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((lot == null) ? 0 : lot.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
@@ -74,11 +71,21 @@ public class Department {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Department other = (Department) obj;
+		ParkingLot other = (ParkingLot) obj;
+		if (employee == null) {
+			if (other.employee != null)
+				return false;
+		} else if (!employee.equals(other.employee))
+			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
+			return false;
+		if (lot == null) {
+			if (other.lot != null)
+				return false;
+		} else if (!lot.equals(other.lot))
 			return false;
 		if (name == null) {
 			if (other.name != null)
@@ -86,11 +93,6 @@ public class Department {
 		} else if (!name.equals(other.name))
 			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Department [id=" + id + ", name=" + name + "]";
 	}
 
 }

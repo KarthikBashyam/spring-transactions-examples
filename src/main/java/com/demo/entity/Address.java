@@ -1,11 +1,12 @@
 package com.demo.entity;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Address {
@@ -17,9 +18,9 @@ public class Address {
 	private String city;
 
 	// Bi-directional
-	@OneToOne(mappedBy = "address")
-	@JsonBackReference
-	private Employee employee;
+	@ManyToOne
+	@JoinColumn(name = "EMP_ID")
+	private List<Employee> employees;
 
 	public Address() {
 		super();
@@ -46,12 +47,12 @@ public class Address {
 		this.city = city;
 	}
 
-	public Employee getEmployee() {
-		return employee;
+	public List<Employee> getEmployee() {
+		return employees;
 	}
 
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
+	public void setEmployee(List<Employee> employees) {
+		this.employees = employees;
 	}
 
 	@Override
@@ -59,7 +60,7 @@ public class Address {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((city == null) ? 0 : city.hashCode());
-		result = prime * result + ((employee == null) ? 0 : employee.hashCode());
+		result = prime * result + ((employees == null) ? 0 : employees.hashCode());
 		result = prime * result + (int) (id ^ (id >>> 32));
 		return result;
 	}
@@ -78,10 +79,10 @@ public class Address {
 				return false;
 		} else if (!city.equals(other.city))
 			return false;
-		if (employee == null) {
-			if (other.employee != null)
+		if (employees == null) {
+			if (other.employees != null)
 				return false;
-		} else if (!employee.equals(other.employee))
+		} else if (!employees.equals(other.employees))
 			return false;
 		if (id != other.id)
 			return false;

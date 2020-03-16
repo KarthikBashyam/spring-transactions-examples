@@ -33,7 +33,8 @@ public class EmployeeService {
 	private MessageSender messageSender;
 
 	public List<Employee> findAllEmployees() {
-		return employeeDAO.getEmployees();
+		List<Employee> employees = employeeDAO.getEmployees();
+		return employees;
 	}
 
 	/**
@@ -75,6 +76,11 @@ public class EmployeeService {
 
 	public List<Employee> getEmpNameByCity(String city) {
 		return employeeDAO.getEmpNameByCity(city);
+	}
+
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void updateDepartment(Long empId, String department) {
+		employeeDAO.updateDepartment(empId, department);
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.demo.transactions.main;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -8,10 +9,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.jms.annotation.EnableJms;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.demo.entity.Address;
+import com.demo.entity.Department;
 import com.demo.entity.Employee;
 import com.demo.service.EmployeeService;
 
@@ -31,7 +32,8 @@ public class SpringTransactionsApplication {
 		return args -> {
 			System.out.println("===============  SPRING TRANSACTIONS TESTING ====================");
 			Employee emp = new Employee("KARTHIK", null, BigDecimal.valueOf(100));
-			emp.setAddress(new Address("TORONTO"));
+			emp.setAddress(Arrays.asList(new Address("TORONTO")));
+			emp.setDepartment(new Department("IT"));
 			employeeService.saveEmployee(emp);
 		};
 	}
